@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'OldLondon';
+    src: local('OldLondon'), url('../../fonts/OldLondon.ttf') format('truetype');
+}
+
+.header{
+    background-color:#222;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    max-width:980px;
+    margin: 0 auto;
+
+    a{  
+        box-sizing: border-box;
+        height:48px;
+        &:link{
+        color:#ebebeb; //ebebeb
+        }
+        &:visited{
+            color:#ebebeb; //ebebeb
+        }
+        &:hover{
+            color:#ebebeb; //ebebeb
+        }
+    }
+
+
+    ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        list-style-type: none;
+        a{
+            font-size: 1.1em;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px;
+            padding-top:15px;
+        }
+    }
+    
+    .navBrand{
+        padding-left:8px;
+        white-space: nowrap;
+        padding-top:10px;
+        text-decoration: none;
+        font-family: 'OldLondon';
+        font-size:25px; 
+    }
+
+    .loginButton{
+        margin-top:6px;
+        margin-right:8px;
+        width:60px;
+        background-color: #222;
+        color:white;
+        font-family: 'OldLondon';
+        height: 36px;
+        border-radius: 2px;
+        font-size: 19px;
+        font-weight: bolder;
+        &:hover{
+            transition-duration: 0.3s;
+            background-color: #ebebebe9;
+            color:#222;
+            border:2px solid white;
+        }
+        &:focus {
+            outline: none;
+        }
+        &:active{
+            background-color: white;
+            
+            color:#222
+        }
+    }
+           
+}
+
+
