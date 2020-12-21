@@ -4,19 +4,19 @@
 }
 
 .header{
-    background-color:#222;
+    background-color:rgb(29, 29, 29);
 }
 
 .container{
     display: flex;
     justify-content: space-between;
-    height: 48px;
+    height: 50px;
     max-width:980px;
     margin: 0 auto;
 
     a{  
         box-sizing: border-box;
-        height:48px;
+        height:50px;
         &:link{
         color:#ebebeb; //ebebeb
         }
@@ -46,37 +46,38 @@
     
     .navBrand{
         padding-left:8px;
-        white-space: nowrap;
-        padding-top:10px;
+        padding-top: 1px;
+        width:100px;
+        text-align: center;
         text-decoration: none;
         font-family: 'OldLondon';
-        font-size:25px; 
+        font-size:20px;
+         
     }
 
     .loginButton{
-        margin-top:6px;
-        margin-right:8px;
+        margin-top:7px;
+        margin-right:10px;
         width:60px;
-        background-color: #222;
+        background-color: rgb(29, 29, 29);
         color:white;
-        font-family: 'OldLondon';
+        font-family: ''Segoe UI', Tahoma, Geneva, Verdana, sans-serif';
         height: 36px;
         border-radius: 2px;
-        font-size: 19px;
-        font-weight: bolder;
+        font-size: 15px;
+      
         &:hover{
             transition-duration: 0.3s;
-            background-color: #ebebebe9;
-            color:#222;
-            border:2px solid white;
+            background-color: white;
+            color:rgb(29, 29, 29);
+            border:2px solid #ebebebe9;
         }
         &:focus {
             outline: none;
         }
         &:active{
-            background-color: white;
-            
-            color:#222
+            background-color:  #ebebebe9;;
+            color:rgb(29, 29, 29);
         }
     }
            
