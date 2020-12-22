@@ -1,0 +1,27 @@
+.loginButton{
+    height: 36px;
+    width:60px;
+    margin-right: 10px;
+    margin-top:5px;
+    background-color: rgb(29, 29, 29);
+    color:#ebebeb;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 15px;
+    border:1px solid #ebebeb;
+    border-radius:2px;
+  
+    &:hover{
+        transition-duration: 0.3s;
+        background-color: white;
+        color:rgb(29, 29, 29);
+
+        border:2px solid #ebebebe9;
+    }
+    &:focus {
+        outline: none;
+    }
+    &:active{
+        background-color:  #ebebebe9;;
+        color:rgb(29, 29, 29);
+    }
+}

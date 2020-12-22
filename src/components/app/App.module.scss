@@ -2,15 +2,13 @@
     margin:0;
     padding: 0;
 }
-.container{  
-    background-color:#ebebeb; //prefect ebebeb
-    min-height: 100vh;
+
+@font-face {
+    font-family: 'OldLondon';
+    src: local('OldLondon'), url('../../fonts/OldLondon.ttf') format('truetype');
 }
 
-.content{
-    margin-top:30px;
-    margin: 0 auto;
-    width:10px;
-    height:1000px;
-    background-color: #222;
+.app{  
+    background-color:#ebebeb; //prefect ebebeb
+    min-height: 100vh;
 }

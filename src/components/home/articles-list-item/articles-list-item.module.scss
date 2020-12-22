@@ -1,0 +1,14 @@
+.listItem{
+    display: block;
+    padding: 15px;
+    font-size:17px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-decoration: none;
+    color:#444;
+    border-bottom: 1px solid rgba(153, 153, 153, 0.479);
+    background-color: rgb(241, 240, 240);
+    &:hover{
+       background-color:white;
+       color:#222;
+    }
+}

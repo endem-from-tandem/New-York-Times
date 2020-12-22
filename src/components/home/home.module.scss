@@ -1,0 +1,17 @@
+.home{
+    max-width: 1000px;
+    margin:0 auto;
+    margin-top:15px; 
+}
+
+.content{
+    flex-direction: column-reverse;
+    display:flex;
+}
+
+
+@media (min-width: 660px) {
+    .content{
+        flex-direction: row;
+    }
+}

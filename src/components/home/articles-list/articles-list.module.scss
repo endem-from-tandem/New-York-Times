@@ -1,0 +1,15 @@
+.list{
+    box-sizing: border-box;
+    max-height: 70vh;
+    margin:10px 10px;
+    padding-right: 8px;
+    overflow-x: auto;
+}
+
+@media (min-width: 660px) {
+    .list{
+        min-width: 45%;
+        max-height: 75vh;
+        margin-top:0px;
+    }
+}
