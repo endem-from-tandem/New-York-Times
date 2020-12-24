@@ -5,9 +5,6 @@ const _ = require('./article.module.scss')
 const Article:React.FC = () =>{
     return(
         <div>
-        { 
-            true
-              ?
             <div className = {_.article}>
             <h3>
             New Coronavirus Variant Causes Alarm Around the World
@@ -19,9 +16,6 @@ const Article:React.FC = () =>{
                 Read more
             </button>
             </div>
-              :
-             null
-        }
         </div>
     )
 } 

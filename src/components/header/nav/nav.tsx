@@ -1,5 +1,6 @@
 import React from 'react'
 import LoginButton from '../login-button'
+import UserDropdown from '../user-dropdown'
 
 const _ = require('./nav.module.scss')
 
@@ -8,15 +9,11 @@ const Nav: React.FC = () => {
         <nav className = {_.nav}>
             <ul>
             { 
-              true
+              false
                 ?
             <LoginButton/>
                 :
-            <li>
-                <a href="/profile">
-                    Profile
-                </a>
-            </li>
+            <UserDropdown/>
             }
             </ul>
         </nav>

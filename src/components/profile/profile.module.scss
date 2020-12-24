@@ -1,0 +1,33 @@
+.profile{
+    max-width: 1000px;
+    margin:0 auto;
+}
+
+.avatar{
+    position: relative;
+    margin:10px auto;
+    width:150px;
+    height:150px;
+    background-size: contain;
+    border-radius: 3px;
+    box-shadow: 0 0 3px 1px #e0e0e0;
+}
+
+.addAvatarButton{
+    width:15%;
+    height:15%;
+    background-color:#222;
+    color:white;
+    border:none;
+    border-radius: 2px;
+    position:absolute;
+    top:1%;
+    left:84%;
+}
+
+.name{
+    font-size:19px;
+    text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+

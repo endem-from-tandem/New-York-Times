@@ -1,0 +1,104 @@
+.overlay {
+    position: fixed;
+    overflow: auto;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(51, 50, 50, 0.658);
+}
+
+.modal {
+    background-color: white;;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width:95vw;
+    max-width:500px;
+}
+
+
+.header{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:rgb(29,29,29);
+    color:#ebebeb;
+    padding: 5px 1rem;
+}
+
+.closeButton{
+    padding: 10px;
+    background-color:inherit;
+    border:none;
+    color:#ebebeb;
+}
+
+.body{
+    padding: 10px 1rem;
+    label{
+        font-size:15px;
+        color:#444;
+        font-family:fantasy;
+    }
+}
+
+.body input[type=text], .body input[type=password]{
+        margin-bottom: 10px;
+        margin-top:2px;
+        background-color: rgba(248, 247, 247, 0.979);
+        width:95%;
+        padding: 8px;
+        border:1px solid lightgray;
+        border-radius: 3px;
+        color:#555;
+        outline: none;
+        font-size: 1.1em;
+        &:focus{
+            color:#333;
+            border:1px solid rgb(184, 184, 184);
+            background-color: white;
+        }
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submit, .signUp{
+    padding: 10px;
+    margin-right: 5px;
+    min-width:80px;
+    border:1px solid#222;
+    border-radius: 3px;
+    background-color: rgb(29,28,29);
+    color:#ebebebde;
+    font-weight: bold;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 15px;
+    &:hover{
+        transition-duration:0.3s;
+        color:white
+    }
+}
+
+.providerButton{
+    margin-right:10px;
+    border:none;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.google{
+    background-image: url('../../../img/google-icon.svg');
+}
+
+.facebook{
+    background-image: url('../../../img/facebook.svg')
+}

@@ -3,7 +3,7 @@ import ArticlesListItem from '../articles-list-item'
 
 const _ = require('./articles-list.module.scss')
 
-const fakeDataArticlesList:Array<string> = ['1', '2', '3','4']
+const fakeDataArticlesList:Array<string> = ['1', '2', '3','4','5','6','7','8','9']
 const articlesListMap = fakeDataArticlesList.map((art)=> {
     return(
         <ArticlesListItem 
