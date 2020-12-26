@@ -3,7 +3,7 @@ import LoginModal from '../login-modal'
 
 const _  = require('./login-button.module.scss')
 
-const LoginButton: React.FC = () => {
+const LoginButton = () => {
     const [showModal, setShowModal] = useState(false)
     return(
         <>
@@ -13,7 +13,7 @@ const LoginButton: React.FC = () => {
             >
                 Sign In
             </button>
-            { showModal ? <LoginModal closeModal = {()=>setShowModal(false)}/> : null}
+            { showModal ? <LoginModal closeModal = {() =>setShowModal(false)}/> : null}
         </>
     )
 }

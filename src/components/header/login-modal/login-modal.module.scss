@@ -16,6 +16,16 @@
     transform: translate(-50%, -50%);
     width:95vw;
     max-width:500px;
+
+    a:link, a:visited, a:focus{
+        text-decoration: none;
+        color:#ebebebde;
+        
+    }
+    a:hover{
+        transition-duration:0.3s;
+        color:white;
+    }
 }
 
 
@@ -101,4 +111,10 @@
 
 .facebook{
     background-image: url('../../../img/facebook.svg')
+}
+
+.notification{
+    padding:10px 0;
+    color:rgb(167, 63, 63);
+    font-family: Arial, Helvetica, sans-serif;
 }

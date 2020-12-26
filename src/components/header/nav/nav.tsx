@@ -4,16 +4,16 @@ import UserDropdown from '../user-dropdown'
 
 const _ = require('./nav.module.scss')
 
-const Nav: React.FC = () => {
+const Nav:React.FC<{auth:boolean}> = ({auth}) => {
     return(
         <nav className = {_.nav}>
             <ul>
             { 
-              false
+              auth
                 ?
-            <LoginButton/>
-                :
             <UserDropdown/>
+                :
+            <LoginButton/>
             }
             </ul>
         </nav>

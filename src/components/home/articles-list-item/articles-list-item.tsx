@@ -3,15 +3,28 @@ import { NavLink } from 'react-router-dom'
 
 const _ = require('./articles-list-item.module.scss')
 
-const ArticlesListItem: React.FC = () => {
+interface IArticlesListItem{
+    data:any,
+    id:string
+}
+
+const ArticlesListItem: React.FC<IArticlesListItem> = (props) => {
+    const {
+        data,
+        id
+    }= props
+
     return(
         <NavLink 
-          to = '/article/3'
+          to = {`/article/${id}`}
           className = {_.listItem}
         >
-            New Coronavirus Variant Causes Alarm Around the World
+           {data.headline.main}
         </NavLink>
     )
 }
+
+
+
 
 export default ArticlesListItem

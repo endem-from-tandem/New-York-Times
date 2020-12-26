@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 import default_avatar from '../../../img/default_avatar.png'
-const user_avatar = 'https://sun9-35.userapi.com/impg/ELDHPHdBQgo-uldZlhGdhqmTNjR6xzTEfAi1_g/bi5RlxX8XvU.jpg?size=874x1080&quality=96&proxy=1&sign=3178b898fa8a443b2d59f340d528b3be&type=album'
+import { withFirebaseService } from '../../hoc'
+const user_avatar = null
 const _ = require('./user-dropdown.module.scss')
 
 
-const UserDropdown  = () => {
+const UserDropdown:React.FC<{fbs:any}>  = ({fbs}) => {
     const [drop, setDrop] = useState(false)
     const dropHandler = () => {
         setDrop(!drop)
     }
     const avatar = user_avatar ||  default_avatar
    
+    const signOutHandler = () => {
+        fbs.userSignOut()
+    }
     return(
         <>
             <input 
@@ -25,8 +29,8 @@ const UserDropdown  = () => {
             <div 
                 onClick = {dropHandler}
                 className = {_.dropdown}>
-                <NavLink to = 'profile'>Profile</NavLink>
-                <button>
+                <NavLink to = '/profile'>Profile</NavLink>
+                <button onClick ={signOutHandler}>
                     Log out
                 </button>
             </div>
@@ -35,4 +39,4 @@ const UserDropdown  = () => {
     )
 }
 
-export default UserDropdown
+export default withFirebaseService() (UserDropdown)

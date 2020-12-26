@@ -10,3 +10,9 @@
     height:150px;
     background-image: url('../../../img/block-content.svg');
 }
+
+@media (min-width: 660px) {
+    .blockText{
+        margin-left:15px;
+    }
+}

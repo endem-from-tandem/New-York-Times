@@ -1,36 +1,73 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
+import { withFirebaseService } from '../hoc'
 
 const _ = require('./sign-up.module.scss')
 
-const SignUp: React.FC = () => {
+const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
+    const [error, setError] = useState(null)
+    const [form, setForm] = useState({
+        email:'',
+        password:'',
+        name: '',
+        lastName:''
+    })
+    const submitRef = useRef(null)
+    const googleRef = useRef(null)
+    const facebookRef = useRef(null)
+
+
+    const refs:Array<any> = [submitRef, googleRef, facebookRef]
+
+    const changeHandler = (e:any) => {
+        setForm({...form, [e.target.name]: e.target.value })
+    }
+
+    const signUpWithEmail = (e) => {
+        e.preventDefault()    
+        setError(null)
+        refs.forEach(r => {
+            r.current.disabled = true
+        })
+        fbs.userSignUpWithEmail(form.email, form.password)
+        .then(() => {
+           fbs.updateUserAfterSignUp(form)
+        })
+        .catch ((e) => {
+            refs.forEach(r => {
+                r.current.disabled = false
+            })
+            setError(e.message)
+        })
+    }
     return(
         <div className = {_.signUp}>
             <h1>Create a New York Times account</h1>
-            <form className = {_.form}>
+            <form onSubmit = {signUpWithEmail} className = {_.form}>
                 <label>
                 <div className ={_.label}>Name</div>
-                <input  type ='text'/>
+                <input onChange ={changeHandler} name = 'name' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Last Name</div>
-                <input  type ='text'/>
+                <input onChange ={changeHandler} name = 'lastName' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Email</div>
-                <input  type ='text'/>
+                <input onChange ={changeHandler} name ='email' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Password</div>
-                <input  type ='password'/>
+                <input onChange ={changeHandler} name ='password'  type ='password'/>
                 </label>
                 <br/>
-                <button className = {_.submit} type = 'submit'>Sign Up</button>
+                <button ref ={submitRef} className = {_.submit} type = 'submit'>Sign Up</button>
             </form>
+            <div className ={_.notification}>{error}</div>
             <h2>Or sign in with:</h2>
-            <button type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
-            <button type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
+            <button ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
+            <button ref = {facebookRef} type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
         </div>
     )
 }
 
-export default SignUp
+export default withFirebaseService() (SignUp)

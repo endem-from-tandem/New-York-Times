@@ -1,14 +1,49 @@
+import React, {useState, useRef} from 'react'
+import { NavLink } from 'react-router-dom'
+import { withFirebaseService } from '../../hoc'
 import Portal from '../../portal'
 
 const _ = require('./login-modal.module.scss')
 
-const LoginModal = ({stopPropagationHandler, closeModal}) =>{
+const LoginModal = ({stopPropagationHandler, closeModal, fbs}) =>{
+    const [error, setError] = useState(null)
+    const [form, setForm] = useState({
+        email:'', password:''
+    })
+    const submitRef = useRef(null)
+    const googleRef = useRef(null)
+    const facebookRef = useRef(null)
+
+    const refs = [submitRef, googleRef, facebookRef]
+
+    const changeHandler = e => {
+        setForm({...form, [e.target.name]: e.target.value })
+    }
+
+    const signInWithEmail = (e) => {
+        e.preventDefault()    
+        setError(null)
+        refs.forEach(r => {
+            r.current.disabled = true
+        })
+        fbs.userLoginWithEmail(form.email, form.password)
+        .then(() => {
+            closeModal()
+        })
+        .catch(e => {
+            refs.forEach(r => {
+                r.current.disabled = false
+            })
+            setError(e.message)
+        })
+    }
+
     stopPropagationHandler = (e) => {
         e.stopPropagation()
     }
     return(
             <Portal>
-                <div 
+                <div
                     className = {_.overlay}
                     onClick ={closeModal}
                 >
@@ -26,26 +61,38 @@ const LoginModal = ({stopPropagationHandler, closeModal}) =>{
                             </button>
                         </div>
                         <div className = {_.body}>
-                            <form>
+                            <form onSubmit = {signInWithEmail}>
                                 <label>Email
-                                <input type = 'text'></input>
+                                <input 
+                                  name = 'email'
+                                  type = 'text'
+                                  onChange ={changeHandler}
+                                >
+                                </input>
                                 </label>
+
                                 <br/>
                                 <label>Password
-                                <input type = 'password'></input>
+                                <input
+                                  name = 'password' 
+                                  type = 'password'
+                                  onChange ={changeHandler}
+                                >
+                                </input>
                                 </label>
                                 <div className = {_.buttons}>
                                     <div>
-                                        <button className ={_.submit} type = 'submit'>Sign in</button>
-                                        <button type = 'button' className= {_.signUp}>Sign Up</button>
+                                        <button ref ={submitRef} className ={_.submit} type = 'submit'>Sign in</button>
+                                        <button onClick = {closeModal} type = 'button' className= {_.signUp}><NavLink to = '/sign-up'>Sign Up</NavLink></button>
                                     </div>
                                 
                                     <div>
-                                        <button type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
-                                        <button type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
+                                        <button ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
+                                        <button ref ={facebookRef} type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
                                     </div>
                                 </div>
                             </form>
+                            <div className = {_.notification}>{error}</div>
                         </div>
                     </div>
                 </div>
@@ -54,4 +101,4 @@ const LoginModal = ({stopPropagationHandler, closeModal}) =>{
     }
    
 
-export default LoginModal
+export default withFirebaseService()(LoginModal)
