@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { NavLink, Redirect } from 'react-router-dom'
 
 import default_avatar from '../../../img/default_avatar.png'
+import compose from '../../../utils/compose'
 import { withFirebaseService } from '../../hoc'
-const user_avatar = null
 const _ = require('./user-dropdown.module.scss')
 
+interface IUserDropdown{
+    fbs:any,
+    user:any
+}
 
-const UserDropdown:React.FC<{fbs:any}>  = ({fbs}) => {
+const UserDropdown:React.FC<IUserDropdown>  = ({fbs, user}) => {
     const [drop, setDrop] = useState(false)
     const dropHandler = () => {
         setDrop(!drop)
     }
-    const avatar = user_avatar ||  default_avatar
+    
+    if(!user){
+        return null
+    }
+    const avatar = user.photoURL ||  default_avatar
    
     const signOutHandler = () => {
         fbs.userSignOut()
@@ -39,4 +48,14 @@ const UserDropdown:React.FC<{fbs:any}>  = ({fbs}) => {
     )
 }
 
-export default withFirebaseService() (UserDropdown)
+const mapStateToProps = (state) => {
+    return{
+        user:state.user
+    }
+}
+
+export default
+compose(
+     withFirebaseService(),
+     connect(mapStateToProps)
+) (UserDropdown)

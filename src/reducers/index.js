@@ -1,16 +1,22 @@
 const initialState = {
+    user:null,
     articles:[],
     loading:true,
     error:null,
 
     article:null,
     articleLoaded:true,
-    articleError:null
+    articleError:null,
 }
 
 const reducer = (state = initialState, action) => {
     console.log(action.type)
     switch(action.type){
+        case 'SET_USER':
+            return{
+                ...state,
+                user:action.payload
+            }
 
         case 'FETCH_ARTICLES_REQUEST':
             return{

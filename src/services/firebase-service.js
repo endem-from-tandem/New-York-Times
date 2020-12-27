@@ -1,4 +1,4 @@
-import {fapp, auth} from '../firebase'
+import {fapp, auth, google_provider} from '../firebase'
 
 export default class FirebaseService{
    echo = 'echo from FirebaseService'
@@ -10,6 +10,10 @@ export default class FirebaseService{
    userSignUpWithEmail(email, password){
       return auth.createUserWithEmailAndPassword(email, password)
    }
+
+   userSignWithGoogle(){
+      return fapp.auth().signInWithPopup(google_provider)
+  }
 
    updateUserAfterSignUp(form){
       const user = fapp.auth().currentUser;

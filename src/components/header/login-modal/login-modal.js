@@ -38,6 +38,24 @@ const LoginModal = ({stopPropagationHandler, closeModal, fbs}) =>{
         })
     }
 
+    const signInWithGoogle = () => {
+        setError(null)
+        refs.forEach(r=> {
+            r.current.disabled = true
+        })
+        fbs.userSignWithGoogle()
+        .then(() => {
+            closeModal()
+        })
+        .catch(e => {
+            refs.forEach(r => {
+                r.current.disabled = false
+            })
+            setError(e.message)
+        })
+
+    }
+
     stopPropagationHandler = (e) => {
         e.stopPropagation()
     }
@@ -83,11 +101,11 @@ const LoginModal = ({stopPropagationHandler, closeModal, fbs}) =>{
                                 <div className = {_.buttons}>
                                     <div>
                                         <button ref ={submitRef} className ={_.submit} type = 'submit'>Sign in</button>
-                                        <button onClick = {closeModal} type = 'button' className= {_.signUp}><NavLink to = '/sign-up'>Sign Up</NavLink></button>
+                                        <NavLink onClick = {closeModal} className= {_.signUp} to = '/sign-up'>Sign Up</NavLink>
                                     </div>
                                 
                                     <div>
-                                        <button ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
+                                        <button onClick = {signInWithGoogle} ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
                                         <button ref ={facebookRef} type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
                                     </div>
                                 </div>

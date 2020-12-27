@@ -19,12 +19,14 @@
 
     a:link, a:visited, a:focus{
         text-decoration: none;
-        color:#ebebebde;
+        border:none;
+        outline: none;
+        color:#666;
         
     }
     a:hover{
         transition-duration:0.3s;
-        color:white;
+        color:#111;
     }
 }
 
@@ -51,7 +53,7 @@
     label{
         font-size:15px;
         color:#444;
-        font-family:fantasy;
+        font-family:Georgia, 'Times New Roman', Times, serif;
     }
 }
 
@@ -79,7 +81,7 @@
     align-items: center;
 }
 
-.submit, .signUp{
+.submit{
     padding: 10px;
     margin-right: 5px;
     min-width:80px;
@@ -94,6 +96,11 @@
         transition-duration:0.3s;
         color:white
     }
+}
+
+.signUp{
+    padding: 10px;
+    background-color:lightgray;
 }
 
 .providerButton{

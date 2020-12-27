@@ -1,3 +1,10 @@
+const setUser = (user) => {
+    return{
+        type: 'SET_USER',
+        payload:user
+    }
+}
+
 const articlesLoaded = (newArticles) => {
     return{
         type: 'FETCH_ARTICLES_SUCCESS',
@@ -47,6 +54,8 @@ const articleError = (error) => {
 }
 
 export {
+    setUser,
+    
     fetchArticles,
 
     articleError,

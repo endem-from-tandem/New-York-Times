@@ -21,19 +21,11 @@ const useRoutes = (auth) => {
                 <Route path = {['/', '/article/:id']}  exact>
                     <Home auth = {auth}/>
                 </Route>
-                <Route path = {['/sign-up', '/profile']}  exact>
-                    { auth 
-                        ?
-                        <>
-                    <Redirect to = 'profile'/>
-                    <Profile/>
-                        </>
-                        :
-                        <>
-                    <Redirect to ='/sign-up'/>
-                    <SignUp/>
-                        </>
-                    }
+                <Route path = '/sign-up' exact>
+                    {!auth? <SignUp/> : <Redirect to ='/'/>}
+                </Route>
+                <Route path = '/profile' exact>
+                    {!auth? <Redirect to ='sign-up'/>: <Profile/>}
                 </Route>
                 <Redirect to = '/'/>
             </Switch>

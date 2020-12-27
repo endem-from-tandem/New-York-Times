@@ -5,33 +5,35 @@ import { withFirebaseService } from '../hoc'
 
 import {fapp} from '../../firebase'
 import useRoutes from '../routes/use-routes'
+import { setUser } from '../../actions'
 
 const _ = require('./App.module.scss')
 
+interface IApp{
+  user:any,
+  setUser:any
+}
 
-const App:React.FC = () =>{
+const App:React.FC<IApp> = ({setUser}) =>{
   const [auth, setAuth] = useState<string | boolean>('prefer')
   useEffect(()=>{
     //Установить прослушку на статус юзи
     fapp.auth().onAuthStateChanged(user => {
       if(user){
           console.log(user)
-          // и дудсоить редакс при изменинии
+          setUser(user)
           setAuth(true)
       }else{
-          // и дудсоить редакс при изменинии
+        setUser(user)
         setAuth(false)
-        console.log('not auth')
+        
       }
     })
     
-    
-
   },[])
 
   return (
     <div className = {_.app}>
-      {/* Сюды роутыр впихнуть вида router(auth) */}
       {useRoutes(auth)}
     </div>
   )
@@ -43,8 +45,11 @@ const mapStateToProps = (state:any) => {
   }
 }
 
+const mapDispatchToProps = {
+  setUser
+}
+
 export default compose(
   withFirebaseService(),
-  connect(mapStateToProps)
-)
- (App)
+  connect(mapStateToProps, mapDispatchToProps)
+)(App)
