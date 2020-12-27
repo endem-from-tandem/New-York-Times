@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import {
@@ -14,86 +14,114 @@ import Loader from '../../loader'
 
 const _ = require('./article.module.scss')
 
-interface IArticle{
-    id:any,
+interface IArticleProps{
+    id:string,
     nys:any,
     loading:boolean,
-    error:any,
+    error:boolean,
     article:any,
     articleLoaded:any, 
     articleRequested:any,
     articleError:any
 }
 
+class Article extends Component<IArticleProps>{
+    state = {
+        redirect:false
+    }
+    componentDidMount(){
+        const {
+            id,
+            nys,
+            articleError,
+            articleLoaded,
+            articleRequested
+        } = this.props
 
-const Article:React.FC<IArticle> = (props) =>{
-    const [redirect, setRedirect] = useState(false)
-    const [loadingKastil, setLoadingKastil] = useState(true)
-    const {
-        nys,
-        loading,
-        error,
-        id,
-        article,
-        articleLoaded,
-        articleError,
-        articleRequested
-    } = props
- 
-    useEffect(()=> {
-        setLoadingKastil(true)
         articleRequested()
         nys.getArticle(id)
             .then((data)=>{
                 articleLoaded(data)
-                setLoadingKastil(false)
+             
             })
             .catch((err)=>{
                 articleError(err)
-                setLoadingKastil(false)
             })
-    },[id])
-
-    if(error){
-        return <ErrorIndicator/>
     }
 
-    if(loading){
-        return <Loader/>
-    }
-    if(loadingKastil){
-        return <Loader/>
+    componentDidUpdate(prevProps) {
+        if (this.props.id !== prevProps.id) {
+            const {
+                id,
+                nys,
+                articleError,
+                articleLoaded,
+                articleRequested
+            } = this.props
+    
+            articleRequested()
+            nys.getArticle(id)
+            .then((data)=>{
+                articleLoaded(data)
+                
+            })
+            .catch((err)=>{
+                articleError(err)
+            })
+        }
     }
 
-    if(redirect){
-        window.location.assign(article.web_url)
-    }
+    render(){
+        const {
+            error,
+            loading,
+            article
+        } = this.props
+        const {redirect} = this.state
+        console.log(this.props, 'propes')
+        
+        if(error){
+            return <ErrorIndicator/>
+        }
+    
+        if(loading){
+            return <Loader/>
+        }
+        
+        if(!article) {
+            return null
+        }
 
-    return(
-        <div>
-            <div className = {_.article}>
-            <h3>
-                {article.headline.main}
-            </h3>
-            <div className = {_.description}>
-               {article.lead_paragraph}
+        if(redirect){
+            window.location.assign(article.web_url)
+        }
+    
+        return(
+            <div>
+                <div className = {_.article}>
+                <h3>
+                    {article.headline.main}
+                </h3>
+                <div className = {_.description}>
+                   {article.lead_paragraph}
+                </div>
+                <div className = {_.tags}>
+                   {article.keywords.map((keyword)=>{
+                       return <div key ={keyword.value}>{keyword.value}</div>
+                   })}
+                </div>
+                <div className = {_.date}>
+                   {article.pub_date.substr(0,10)}
+                </div>
+               
+                <button onClick = {()=>this.setState({redirect:true})} className = {_.moreButton}>
+                    Read more
+                </button>
+                </div>
             </div>
-            <div className = {_.tags}>
-               {article.keywords.map((keyword)=>{
-                   return <div key ={keyword.value}>{keyword.value}</div>
-               })}
-            </div>
-            <div className = {_.date}>
-               {article.pub_date.substr(0,10)}
-            </div>
-           
-            <button onClick = {()=>setRedirect(true)} className = {_.moreButton}>
-                Read more
-            </button>
-            </div>
-        </div>
-    )
-} 
+        )
+    }
+}
 
 const mapStateToProps = (state) => {
     return{
@@ -109,8 +137,8 @@ const mapDispatchToProps = {
     articleError
 }
 
-export default
-compose(
+
+export default compose(
     withNyapiService(),
-    connect(mapStateToProps, mapDispatchToProps) 
+    connect(mapStateToProps, mapDispatchToProps)
 ) (Article)

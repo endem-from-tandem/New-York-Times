@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
 import { withFirebaseService } from '../hoc'
-
+import formValid from '../../utils/form-valid'
 const _ = require('./sign-up.module.scss')
 
 const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<any>(null)
     const [form, setForm] = useState({
         email:'',
         password:'',
@@ -25,19 +25,33 @@ const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
     const signUpWithEmail = (e) => {
         e.preventDefault()    
         setError(null)
+    
         refs.forEach(r => {
             r.current.disabled = true
         })
-        fbs.userSignUpWithEmail(form.email, form.password)
-        .then(() => {
-           fbs.updateUserAfterSignUp(form)
-        })
-        .catch ((e) => {
+        
+        const validAnswer = formValid(form)
+        if(validAnswer.value === false){
+            setError(validAnswer.message)
             refs.forEach(r => {
                 r.current.disabled = false
             })
-            setError(e.message)
-        })
+        }
+
+        if(validAnswer.value){
+            console.log(validAnswer.value)
+            fbs.userSignUpWithEmail(form.email, form.password)
+            .then(() => {
+               fbs.updateUserAfterSignUp(form)
+            })
+            .catch ((e) => {
+                refs.forEach(r => {
+                    r.current.disabled = false
+                })
+                setError(e.message)
+            })
+        }
+       
     }
     return(
         <div className = {_.signUp}>
@@ -45,19 +59,19 @@ const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
             <form onSubmit = {signUpWithEmail} className = {_.form}>
                 <label>
                 <div className ={_.label}>Name</div>
-                <input onChange ={changeHandler} name = 'name' type ='text'/>
+                <input required onChange ={changeHandler} name = 'name' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Last Name</div>
-                <input onChange ={changeHandler} name = 'lastName' type ='text'/>
+                <input required onChange ={changeHandler} name = 'lastName' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Email</div>
-                <input onChange ={changeHandler} name ='email' type ='text'/>
+                <input required onChange ={changeHandler} name ='email' type ='text'/>
                 </label>
                 <label>
                 <div className ={_.label}>Password</div>
-                <input onChange ={changeHandler} name ='password'  type ='password'/>
+                <input required onChange ={changeHandler} name ='password'  type ='password'/>
                 </label>
                 <br/>
                 <button ref ={submitRef} className = {_.submit} type = 'submit'>Sign Up</button>

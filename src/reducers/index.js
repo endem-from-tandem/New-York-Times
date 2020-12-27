@@ -22,7 +22,8 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 articles:[],
-                loading:true
+                loading:true,
+                error:null
             }
         case 'FETCH_ARTICLES_SUCCESS':
             return{
@@ -37,10 +38,10 @@ const reducer = (state = initialState, action) => {
                 error:action.payload
             }
 
-
          case 'FETCH_ARTICLE_REQUEST':
             return{
                 ...state,
+                articleError:null,
                 article:null,
                 articleLoading:true
             }

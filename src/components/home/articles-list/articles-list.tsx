@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import compose from '../../../utils/compose'
 import {fetchArticles} from '../../../actions'
@@ -11,14 +11,15 @@ import ErrorIndicator from '../../error-indicator'
 
 const _ = require('./articles-list.module.scss')
 
-interface IArticleList{
+interface IArticleListProps{
     articles:any,
     loading:boolean,
     fetchArticles: any,
     error:any
 }
 
-
+/*
+*/
 const ArticlesList = ({articles}) => {
     return(
         <div className = {_.list}>
@@ -39,36 +40,22 @@ const ArticlesList = ({articles}) => {
     )
 }
 
-const ArticlesListContainer:React.FC<IArticleList> = (props) => {
-    const {
-        fetchArticles,
-        articles,
-        loading,
-        error
-    } = props
-
-    // сомнительное решение мелькания articles-list при переходе с profile на главную
-    const [loadingCastil, setLoadingCastil] = useState(true)
-
-    useEffect(()=> {
-       setLoadingCastil(true)
-       fetchArticles()
-       setLoadingCastil(false)
-    }, [])
-
-    if(loadingCastil){
-        return <Loader/>
+class ArticlesListContainer extends Component<IArticleListProps>{
+    componentDidMount(){
+        this.props.fetchArticles()
     }
 
-    if(loading){
-        return <Loader/>
+    render(){
+        const{loading, error, articles} = this.props
+        if(loading){
+            return <Loader/>
+        }
+        if(error){
+            return <ErrorIndicator/>
+        }
+        return <ArticlesList articles = {articles}/>
     }
-    if(error){
-        return <ErrorIndicator/>
-    }
-    return <ArticlesList articles = {articles}/>
 }
-
 
 const mapStateToProps = ({articles, loading, error}) => {
     return {articles, loading, error}
@@ -79,6 +66,8 @@ const mapDispatchToProps = (dispatch, {nys}) => {
         fetchArticles: fetchArticles(nys, dispatch)
     }
 }
+
+
 
 export default compose(
     withNyapiService(),
