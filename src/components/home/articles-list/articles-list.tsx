@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import compose from '../../../utils/compose'
 import {fetchArticles} from '../../../actions'

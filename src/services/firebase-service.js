@@ -2,7 +2,6 @@ import {fapp, auth, google_provider} from '../firebase'
 
 export default class FirebaseService{
    echo = 'echo from FirebaseService'
-
    userLoginWithEmail(email, password){
       return auth.signInWithEmailAndPassword(email, password)
    }
@@ -15,6 +14,11 @@ export default class FirebaseService{
       return fapp.auth().signInWithPopup(google_provider)
   }
 
+   getUser(){
+      const user = fapp.auth().currentUser
+      return user
+   }
+
    updateUserAfterSignUp(form){
       const user = fapp.auth().currentUser;
       user.updateProfile({
@@ -25,6 +29,18 @@ export default class FirebaseService{
          // An error happened.
        });
        
+   }
+
+   updateUserAvater(url){
+      const user =fapp.auth().currentUser
+      console.log(url)
+      user.updateProfile({
+         photoURL:url
+      }).then(function(){
+
+      }).catch((err)=>{
+
+      })
    }
 
    userSignOut(){

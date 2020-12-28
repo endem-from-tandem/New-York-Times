@@ -1,6 +1,5 @@
-import React, { useEffect, useState, Component } from 'react'
+import React, {Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import {
     articleLoaded,
     articleRequested,
@@ -78,7 +77,6 @@ class Article extends Component<IArticleProps>{
             article
         } = this.props
         const {redirect} = this.state
-        console.log(this.props, 'propes')
         
         if(error){
             return <ErrorIndicator/>

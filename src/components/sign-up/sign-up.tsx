@@ -53,6 +53,10 @@ const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
         }
        
     }
+
+    const signUpWithGoogle = () => {
+        fbs.userSignWithGoogle()
+    }
     return(
         <div className = {_.signUp}>
             <h1>Create a New York Times account</h1>
@@ -78,7 +82,7 @@ const SignUp: React.FC<{fbs:any}> = ({fbs}) => {
             </form>
             <div className ={_.notification}>{error}</div>
             <h2>Or sign in with:</h2>
-            <button ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
+            <button onClick = {signUpWithGoogle} ref ={googleRef} type = 'button' className ={`${_.google} ${_.providerButton}`}></button>
             <button ref = {facebookRef} type = 'button' className ={`${_.facebook} ${_.providerButton}`}></button>
         </div>
     )

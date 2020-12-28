@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import compose from '../../utils/compose'
-import { withFirebaseService } from '../hoc'
+import { useDispatch } from 'react-redux'
 
 import {fapp} from '../../firebase'
 import useRoutes from '../routes/use-routes'
-import { setUser } from '../../actions'
 
 const _ = require('./App.module.scss')
 
-interface IApp{
-  user:any,
-  setUser:any
-}
 
-const App:React.FC<IApp> = ({setUser}) =>{
+const App:React.FC= () =>{
+  const dispatch = useDispatch()
   const [auth, setAuth] = useState<string | boolean>('prefer')
   useEffect(()=>{
-    //Установить прослушку на статус юзи
     fapp.auth().onAuthStateChanged(user => {
       if(user){
           console.log(user)
-          setUser(user)
+          dispatch({type:'SET_USER', payload:user})
           setAuth(true)
       }else{
-        setUser(user)
+        dispatch({type:'SET_USER', payload:user})
         setAuth(false)
-        
       }
     })
-    
   },[])
 
   return (
@@ -39,17 +30,4 @@ const App:React.FC<IApp> = ({setUser}) =>{
   )
 }
 
-const mapStateToProps = (state:any) => {
-  return{
-    user: state.user
-  }
-}
-
-const mapDispatchToProps = {
-  setUser
-}
-
-export default compose(
-  withFirebaseService(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(App)
+export default App
